@@ -61,6 +61,7 @@ def main():
     parser.add_argument('--default-user', help='default ssh username to use if we cannot detect from AMI name')
     parser.add_argument('--prefix', default='', help='specify a prefix to prepend to all host names')
     parser.add_argument('--white-list-region', default='', help='Specify from the command line which reqion you explicitly want', nargs="+")
+    parser.add_argument('--always-omit-keyfile', action='store_true', help='When set the key file is never used')
 
     args = parser.parse_args()
 
@@ -149,7 +150,7 @@ def main():
             except:
                 pass
 
-            if doesKeyFileExist(instance.key_name):
+            if not args.always_omit_keyfile and doesKeyFileExist(instance.key_name):
                 print '    IdentityFile ~/.ssh/' + instance.key_name + '.pem'
             print '    StrictHostKeyChecking no' # just for me, removing this is usually a good choice
             print
