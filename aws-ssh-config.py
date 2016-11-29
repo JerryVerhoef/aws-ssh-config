@@ -123,6 +123,7 @@ def main():
 
     for k in sorted(instances):
         for instance in instances[k]:
+
             if args.private:
                 if instance.private_ip_address:
                     ip = instance.private_ip_address
@@ -152,6 +153,8 @@ def main():
 
             if not args.always_omit_keyfile and doesKeyFileExist(instance.key_name):
                 print '    IdentityFile ~/.ssh/' + instance.key_name + '.pem'
+            elif doesKeyFileExist(id):
+                print '    IdentityFile ~/.ssh/' + id + '.pem'
             print '    StrictHostKeyChecking no' # just for me, removing this is usually a good choice
             print
 
